@@ -10,6 +10,16 @@ A JVM library over the soroauth signing core, published to a Maven repository as
 - **Architectures**: `x86_64`, `aarch64` / `arm64`.
 - **Runtime**: JDK 22+ (requires the final Foreign Function and Memory API).
 
+## Threading
+
+The committed C ABI concurrency contract lives at
+[bindings/c/THREADING.md](../c/THREADING.md). The JVM binding uses the small
+native surface in `native/` for `SoroauthVersion` and `SoroauthSha256Hex` only;
+both are stateless. The pure-JVM signing path is governed by ordinary JVM
+concurrency rules — the `Soroauth` entry points are stateless and
+`VerificationReport` and `NodeVerdict` are immutable values. When the fuller
+native surface lands, the ABI contract is the one callers code against.
+
 ## On the C ABI dependency
 
 This binding's issue notes it depends on the C ABI issue; that issue

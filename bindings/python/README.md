@@ -11,6 +11,15 @@ time—only the platform-appropriate wheel.
 - **Architectures**: `x86_64`, `aarch64` / `arm64`.
 - **Runtime**: Python 3.9+.
 
+## Threading
+
+The Python wrappers call straight through to the C ABI, so the ABI's contract
+applies here unchanged: every function is safe to call concurrently from any
+thread; the wrapper releases the heap-allocated string from the call that
+returned it before returning the Python result, so the host never owns a
+`char*`. The committed contract and the Go-side evidence for it live at
+[bindings/c/THREADING.md](../c/THREADING.md).
+
 ## Installation
 
 ```bash
