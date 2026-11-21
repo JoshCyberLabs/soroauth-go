@@ -11,6 +11,17 @@ time—only the platform-appropriate wheel.
 - **Architectures**: `x86_64`, `aarch64` / `arm64`.
 - **Runtime**: Python 3.9+.
 
+## Type checking
+
+The wheel is a PEP 561 typed distribution: it carries `py.typed` and
+`__init__.pyi` beside the module so a type checker sees the real public surface
+rather than `Any`. The three string kinds the library handles are named —
+`Base64Xdr`, `HexStr`, `LedgerSeq` — as plain aliases so a reader can tell which
+of the three a parameter wants at the call site. The stubs are run against a
+well-typed sample and a deliberately wrong one in CI
+(`.github/workflows/ci-python.yml`): the second must fail, so the stubs cannot
+regress to "accept everything" without that job going red.
+
 ## Threading
 
 The Python wrappers call straight through to the C ABI, so the ABI's contract

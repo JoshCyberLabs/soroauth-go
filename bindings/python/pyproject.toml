@@ -47,6 +47,12 @@ include = ["soroauth*"]
 [tool.setuptools.package-dir]
 "" = "."
 
+# Ship the py.typed marker and the stub file inside the installed package so
+# a type checker finds them. Without this, the wheel contains the .py source
+# but neither the marker nor the .pyi, and every consumer sees Any.
+[tool.setuptools.package-data]
+soroauth = ["py.typed", "*.pyi"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
