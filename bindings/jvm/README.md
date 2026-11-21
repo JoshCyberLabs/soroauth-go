@@ -40,6 +40,13 @@ fuller native surface belongs to the C ABI work, not to this binding.
 </dependency>
 ```
 
+The artifact is published to
+[Maven Central](https://central.sonatype.com/artifact/org.soroauth/soroauth-jvm)
+by the `release-jvm.yml` workflow when a `v*` tag is pushed, signed with GPG,
+with sources and javadoc jars attached. The jar bundles the native libraries for
+linux-x86_64, linux-aarch64, macos-x86_64 and macos-aarch64 under
+`native/<os>-<arch>/`, and `NativeLoader` selects the right one at runtime.
+
 Minimum version: **JDK 22**, the first release with the Foreign Function and
 Memory API final (JEP 454). The FFM binding in this artifact sets the floor;
 `maven.compiler.release` states it, and CI runs the suite on 22 to prove the
